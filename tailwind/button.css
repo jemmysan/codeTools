@@ -1,0 +1,15 @@
+.toggle-checkbox:checked {
+    /* @apply: right-0 ; */
+    right: 0;
+    border-color: white;
+    margin-bottom: 3px;
+    margin-right: 3px;
+
+    background-color: white;
+  }
+
+  .toggle-checkbox:checked + .toggle-label {
+    /* @apply: bg-green-400; */
+    background-color: #60a5fa; 
+  }
+

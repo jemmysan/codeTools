@@ -2,21 +2,29 @@
 
 
 /*************** Créer une reference ************/
+
+    function insertOrderNum($model,$idCategorie)
+    {
+        if($model === 'Article')
+            return count(Article::where('categorie_id',$idCategorie)->get())+1;
+    }
+
     function createReference($libelle,$categorie)
     {
         $lib = substr($libelle,0,3);
-        $getCat = Categorie::find($categorie)->libelle;
-        $checkDash = strstr($getCat,'-')?true:false;
+        $getCat = Categorie::find($categorie);
+        $libelleCat = $getCat->libelle;
+        $checkDash = strstr($libelleCat,'-')?true:false;
         $cat = '';
 
         if($checkDash){
-            $explodeCat = explode('-',$getCat);
+            $explodeCat = explode('-',$libelleCat);
             $cat = substr($explodeCat[0],0,1).substr($explodeCat[1],0,2);
         }else{
-            $cat = substr($getCat,0,3);
+            $cat = substr($libelleCat,0,3);
         }
-
-        $x = count(Article::where('categorie_id',$categorie)->get())+1;
+        
+        $x = $this->insertOrderNum('Article',$getCat->id);
         $refJoined = "ref".$lib.$cat.$x;
         $segment = str_split($refJoined,3);
         $implode = implode('-',$segment);

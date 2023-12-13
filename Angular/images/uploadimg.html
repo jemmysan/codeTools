@@ -1,0 +1,8 @@
+<div class="h-[60%] w-full rounded-lg shadow shadow-blue-950 flex justify-center items-center">
+                <label for="photo" style="cursor: pointer;">
+                    <img [src]="img" background-image="assets/image/demon_slayer.png"
+                        style="max-width: 100%; height: 10rem; border: 2px solid #ccc; padding: 15px; margin-bottom: 3.5rem;" />
+                </label>
+                <input type="file" id="photo" formControlName="photo" (change)="handleFileChange($event)" style="display: none;"
+                    required>
+</div>
