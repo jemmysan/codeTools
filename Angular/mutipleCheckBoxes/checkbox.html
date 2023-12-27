@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table class="w-full"> 
+                                        
+        <thead class="text-blue-800 shadow-sm shadow-blue-950 text-lg">
+            <th class="w-20 flex justify-between items-center pl-2 border-r-2">
+                <input type="checkbox" [disabled]="disableWhenAdd" [(ngModel)]="checkAll" (change)="checkAllCheckBoxes()">
+                <span class="mr-5">All</span>
+            </th>
+            <th class=" bg   w-[60%] max-w-auto">
+                <!-- <div class="flex justify-start pl-4"> -->
+                    <span>Libelle</span>
+                <!-- </div> -->
+               </th>
+            <!-- <th class="w-[38%]">Action</th> -->
+        </thead>
+
+       <tbody class=" pt-2" *ngFor="let item of listCat | paginate : {itemsPerPage:nbrPage,currentPage:numPage};" >
+            <tr class="w-full"> 
+                <td class="  w-20  flex justify-between items-center px-2 border-r-2">
+                    <div class="h-full mt-2 px-4 py-3   w-full flex justify-center">
+                        <div class="h-full">
+                           <input type="checkbox"  [(ngModel)]="item.checked" (change)="checkSingleCheckBox()"  [disabled]="disableWhenAdd">
+                        </div> 
+                    </div>  
+                </td>
+
+                <td class="border-b-2 w-full max-w-auto text-blue-800">
+                     <div class=" flex justify-center mt-2 px-4 py-2 text-lg"> 
+                         <span  (click)="editCategorie(item?.id, item?.libelle)" class="bg-slate-100 text-start  w-full rounded-full pl-2">
+                            {{item.libelle}}
+                         </span> 
+                     </div>  
+                </td>
+
+                
+            </tr>
+       </tbody>
+
+       
+        <tfoot class="w-[100%]">
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <div class="pt-2 text-blue-800 w-full flex justify-center">
+                        <pagination-controls (pageChange)="numPage = $event"></pagination-controls>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+       
+    </table>
+</body>
+</html>
