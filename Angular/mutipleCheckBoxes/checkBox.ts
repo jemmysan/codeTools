@@ -14,7 +14,7 @@ function checkAllCheckBoxes()
       }
       this.updateCheckAllState();
       this.getSelectedIds();
-  }
+  } 
 
 function updateCheckAllState()
   {
