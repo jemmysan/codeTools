@@ -1,0 +1,6 @@
+---- SoftDeletes ---
+1- Ajout dans le modeles SoftDeletes
+2- Créer colonne delete_at si elle n'existe pas
+    => add_deleted_at_to_table_name
+3- Migrates en ajoutant  $table->softDeletes() dans la methode up()
+    et  $table->dropColumn('deleted_at') a la methode down;

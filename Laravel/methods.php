@@ -1,11 +1,12 @@
 <?php
 
-
+/****************** Supprimer un enregistrement *******/
 
 /********************** Supprimer un enregistrement avec la table d'association ******/
 
-class deleteAssociation
+class deleteOrRestore
 {
+    /********************** Supprimer un enregistrement avec la table d'association ******/
     public function delete($id)
     {
         return DB::transaction(function () use($id){
@@ -25,5 +26,28 @@ class deleteAssociation
                 return response()->json(['messages'=>'article introuvable']);
             }
         });
+    }
+
+
+    /********************** Supprimer un enregistrement simple ******/
+    public function deleteOne($id){
+        $model = Model::find($id);
+        if($model){
+            $model->delete();
+            return 'message';
+        }else{
+            return 'message';
+        }
+    }
+
+
+    public function restore($id){
+        $model = Model::onlyTrashed()->where('id',$id)->first();
+        if($Model){
+            $model->restore();
+            return 'message';
+        }else{
+            return 'message';
+        }
     }
 }

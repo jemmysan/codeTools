@@ -5,7 +5,6 @@
         //----- Alphabet and dash ---------
 ['required|min:3|regex:/^[a-zA-Z-]+$/'];
 
-
         //----- Alphabet only ---------
 ['min:2|regex:/^[a-zA-Z]+$/]'];
 

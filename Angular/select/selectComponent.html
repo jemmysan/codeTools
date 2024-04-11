@@ -4,3 +4,11 @@
                     <option [ngValue]="null" disabled selected>--choisir categorie--</option>
                     <option *ngFor="let categorie of categories"  [ngValue]="categorie.id">{{categorie.libelle}}</option>
                 </select>
+
+
+
+<!-- Get Select Value -->
+                <select  [(ngModel)]="selectCategorie"   id="" class="bg-white m-3 ring-1 ring-yellow-400 rounded-xl shadow-sm shadow-yellow-600 w-[100%] flex justify-center p-1 pl-2">
+                    <!-- <option value="" disabled >Selectionner une categorie</option> -->
+                    <option *ngFor="let order of orders " [value]="order.type">{{order.type}}</option>
+                  </select>
