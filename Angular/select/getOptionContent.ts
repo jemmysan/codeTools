@@ -5,3 +5,7 @@ function getSelectContent(catSelect? : HTMLSelectElement)
     let selectedOption = catSelect?.options[catSelect.selectedIndex];
     let cat = selectedOption?.text;
 }
+
+function getSelectValue(){
+    this.selectCategorieValue = this.form.get('formControlName')?.value;
+  }
