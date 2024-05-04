@@ -1,0 +1,5 @@
+1-- Add guard and provider to aut.php in config folder ---
+
+2-- Add middleware 
+    => php artisan make:middleware AdminRedirect
+    => php artisan make:middleware AdminAuthenticate

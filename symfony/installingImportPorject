@@ -1,0 +1,54 @@
+Étapes pour travailler avec un projet Symfony extrait et une base de données PostgreSQL
+1. Démarrage du projet Symfony:
+
+Ouvrez un terminal et accédez au répertoire où vous avez extrait le projet Symfony.
+Exécutez la commande suivante pour démarrer le conteneur Docker du projet Symfony:
+Bash
+
+docker-compose up -d
+
+Utilisez ce code avec précaution.
+Cette commande démarrera tous les services nécessaires au projet, y compris la base de données PostgreSQL et le serveur web.
+
+2. Importation du fichier SQL:
+
+Pour importer le fichier SQL contenant les données de votre base de données PostgreSQL, vous pouvez utiliser l'outil docker exec pour exécuter une commande à l'intérieur du conteneur Docker de la base de données.
+
+Exécutez la commande suivante, en remplaçant votre_fichier_sql.sql par le nom de votre fichier SQL et nom_de_votre_base_de_données par le nom de votre base de données:
+
+Bash
+docker exec -it nom_de_votre_conteneur_db psql -U postgres -p postgres nom_de_votre_base_de_données < votre_fichier_sql.sql
+Utilisez ce code avec précaution.
+Remplacez nom_de_votre_conteneur_db par le nom du conteneur Docker de votre base de données. Vous pouvez trouver le nom du conteneur en exécutant la commande docker ps.
+3. Configuration de la connexion à la base de données:
+
+Le fichier de configuration de la base de données pour votre projet Symfony se trouve généralement dans config/packages/doctrine.yaml.
+Ouvrez ce fichier dans un éditeur de texte.
+Localisez la section doctrine.dbal et assurez-vous que les informations de connexion à la base de données correspondent à celles de votre conteneur Docker:
+YAML
+doctrine:
+    dbal:
+        default_connection: your_connection_name  # Replace with a meaningful name
+        connections:
+            your_connection_name:
+                driver: 'pdo_pgsql'  # Specify PostgreSQL driver
+                host: 'nom_de_votre_conteneur_db'  # Use container name from docker-compose
+                port: 5432  # Standard PostgreSQL port
+                dbname: 'nom_de_votre_base_de_données'  # Match database name from docker-compose
+                user: 'postgres'  # Default PostgreSQL username
+                password: 'postgres'  # Default PostgreSQL password
+                charset: utf8mb4
+
+                # Additional options (optional)
+                # ...
+Utilisez ce code avec précaution.
+4. Accès à l'application Symfony:
+
+Une fois le conteneur Docker démarré et la base de données importée, vous pouvez accéder à votre application Symfony dans votre navigateur web.
+L'URL par défaut est généralement http://localhost:8000.
+Notes supplémentaires:
+
+Assurez-vous que le fichier docker-compose.yml de votre projet Symfony est correctement configuré et qu'il définit les noms des conteneurs et les paramètres de connexion à la base de données.
+Vous pouvez utiliser l'interface graphique de Docker Desktop pour gérer vos conteneurs et voir leurs journaux.
+Si vous rencontrez des problèmes, consultez la documentation Symfony pour la configuration de la base de données et le débogage: https://symfony.com/doc/current/index.html
+N'hésitez pas à me poser des questions si vous avez besoin de plus d'explications ou d'aide pour une étape particulière.
