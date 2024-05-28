@@ -8,3 +8,13 @@
     => add_deleted_at_to_table_name
 3- Migrates en ajoutant  $table->softDeletes() dans la methode up()
     et  $table->dropColumn('deleted_at') a la methode down;
+
+
+---- Vider la base de données en supprimant toutes les tables -----
+  php artisan migrate:reset
+
+---- Vider les données des tables de la BD -----
+    php artisan migrate:fresh
+
+----- Pour exécuter automatiquement les seeds après les migrations, vous pouvez combiner migrate:fresh et db:seed ---
+    php artisan migrate:fresh --seed
