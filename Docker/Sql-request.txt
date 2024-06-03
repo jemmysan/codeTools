@@ -1,0 +1,36 @@
+1- Connexion server Mysql dans Docker
+
+    mysql -u root -p
+
+2- Mot de passe
+
+    root_password
+
+3- Creer un utilisateur;
+
+    CREATE USER 'jemmy'@'%' IDENTIFIED BY 'jemmy_password';
+
+4- Accorder des privileges 
+
+    GRANT ALL PRIVILEGES ON annuaire_startup.* TO 'jemmy'@'%';
+
+    FLUSH PRIVILEGES;
+
+5- Voir un utilisateur
+
+    SELECT User FROM mysql.user WHERE User='nom_utilisateur';
+
+6- Voir les identifiants d'un user 
+
+    SELECT user, host, authentication_string FROM mysql.user WHERE user = 'jemmy';
+
+7- Voir les bases de données
+
+    SHOW DATABASES;
+
+
+8- Creer une base de données 
+
+    CREATE DATABASE annuaire_startup;
+
+6- 

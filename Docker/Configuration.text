@@ -12,7 +12,11 @@
 7- Start container
     docker start <nom_du_conteneur>
 
-    Si vous ne disposez pas d'un fichier docker-compose.yml et que vous exécutez les conteneurs individuellement, vous pouvez démarrer chaque conteneur individuellement à l'aide de la commande docker start.
+    Si vous ne disposez pas d'un fichier docker-compose.yml
+    et que vous exécutez les conteneurs individuellement,
+    vous pouvez démarrer chaque conteneur individuellement 
+    à l'aide de la commande docker start.
+
     docker start annuairestartup-app-1
-    docker start annuairestartup-db-1
+    docker start annuairestartup-db-1 
 
