@@ -1,0 +1,5 @@
+1- Installer Laravel Sanctum via la install:apicommande Artisan :
+    php artisan install:api
+
+2- use Laravel\Sanctum\HasApiTokens;
+    dans la methode => use HasApiTokens

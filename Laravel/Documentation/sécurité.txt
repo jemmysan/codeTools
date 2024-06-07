@@ -1,4 +1,7 @@
-Gérer une multiconnexion dans Laravel avec sécurité et autorisation des routes implique plusieurs aspects importants pour garantir une protection adéquate de votre application. Here's a comprehensive approach:
+Gérer une multiconnexion dans Laravel avec sécurité et autorisation des routes 
+implique plusieurs aspects importants pour 
+garantir une protection adéquate de votre application.
+ Here's a comprehensive approach:
 
 1. Authentification et Autorisation:
 
@@ -23,7 +26,8 @@ envisagez d'utiliser des jetons d'accès JSON Web Tokens (JWT) pour authentifier
 Middleware d'Authentification: Appliquez des middleware d'authentification aux routes qui nécessitent une connexion utilisateur. 
 Cela garantit que seuls les utilisateurs authentifiés peuvent accéder à ces routes.
 
-Middleware d'Autorisation: Utilisez des middleware d'autorisation pour contrôler l'accès aux routes en fonction des rôles et des permissions des utilisateurs. 
+Middleware d'Autorisation: Utilisez des middleware d'autorisation pour contrôler 
+l'accès aux routes en fonction des rôles et des permissions des utilisateurs. 
 Cela garantit que seuls les utilisateurs autorisés peuvent accéder aux fonctionnalités spécifiques.
 
 4. Protection contre les Vulnérabilités:

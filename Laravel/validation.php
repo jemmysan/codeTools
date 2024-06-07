@@ -18,6 +18,11 @@
 /**********    Validation image *************/
 ['required|image|mimes:jpeg,png,jpg,gif,svg|max:{$taille}'];
 
+/**********    Validation emailo *************/
+['required|email|max:255|unique:users'];
+
+/**********    Validation mot de passe *************/
+['required|string|min:8|confirmed'];
 
 /************ Try catch for one insertion *******/
 try{
@@ -29,6 +34,23 @@ catch(QueryException $e){
     //Instruction
 } 
 
+/************/
+try{
+        $password = Hash::make($request->password);
+        User::create([
+            'firstname'=>$request->firstname,
+            'lastname'=>$request->lastname,
+            'phone'=>$request->phone,
+            'email'=>$request->email,
+            'password'=>$password 
+       ]);
+    }catch (QueryException $e) {
+        Log::error('Erreur de base de données : ' . $e->getMessage());
+        return response()->json(['error' => 'Erreur de base de données'], 500);
+    } catch (\Exception $e) {
+        Log::error('Erreur : ' . $e->getMessage());
+        return response()->json(['error' => 'Une erreur est survenue'], 500);
+    }
 // QueryException a importer
 
 /*********** Validate ***********/

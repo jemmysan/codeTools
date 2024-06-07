@@ -1,0 +1,248 @@
+Pour sécuriser une application avec un backend en Laravel et un frontend en Angular, il faut mettre en place plusieurs mesures de sécurité à différents niveaux. Voici un guide étape par étape :
+
+### 1. **Authentification et Autorisation avec Laravel et Angular**
+
+#### A. **Configuration de Laravel Sanctum**
+
+1. **Installation de Laravel Sanctum**
+
+   ```sh
+   composer require laravel/sanctum
+   ```
+
+2. **Publication de la configuration et migration**
+
+   ```sh
+   php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+   php artisan migrate
+   ```
+
+3. **Configuration de Sanctum**
+
+   Dans `config/sanctum.php`, vous pouvez configurer les options comme `stateful domains`.
+
+   ```php
+   'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', 'localhost,127.0.0.1')),
+   ```
+
+4. **Mise à jour des middleware**
+
+   Dans `app/Http/Kernel.php`, ajoutez le middleware de Sanctum dans le groupe `api` :
+
+   ```php
+   'api' => [
+       \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+       'throttle:api',
+       \Illuminate\Routing\Middleware\SubstituteBindings::class,
+   ],
+   ```
+
+5. **Configuration des cookies et des domaines dans `.env`**
+
+   ```env
+   SANCTUM_STATEFUL_DOMAINS=your-frontend-domain.com
+   SESSION_DOMAIN=.your-frontend-domain.com
+   ```
+
+6. **Protéger les routes**
+
+   Utilisez le middleware `auth:sanctum` pour protéger les routes de votre API.
+
+   ```php
+   Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+       return $request->user();
+   });
+   ```
+
+#### B. **Configuration d'Angular**
+
+1. **Installation de l'HTTP Client**
+
+   Assurez-vous que `HttpClientModule` est importé dans votre application Angular :
+
+   ```typescript
+   import { HttpClientModule } from '@angular/common/http';
+
+   @NgModule({
+     declarations: [
+       // ...
+     ],
+     imports: [
+       // ...
+       HttpClientModule
+     ],
+     providers: [],
+     bootstrap: [AppComponent]
+   })
+   export class AppModule { }
+   ```
+
+2. **Service d'authentification**
+
+   Créez un service pour gérer l'authentification avec Laravel.
+
+   ```typescript
+   import { Injectable } from '@angular/core';
+   import { HttpClient } from '@angular/common/http';
+   import { Observable } from 'rxjs';
+
+   @Injectable({
+     providedIn: 'root'
+   })
+   export class AuthService {
+     private baseUrl = 'http://your-backend-api.com';
+
+     constructor(private http: HttpClient) { }
+
+     login(credentials: { email: string, password: string }): Observable<any> {
+       return this.http.post(`${this.baseUrl}/login`, credentials, { withCredentials: true });
+     }
+
+     logout(): Observable<any> {
+       return this.http.post(`${this.baseUrl}/logout`, {}, { withCredentials: true });
+     }
+
+     getUser(): Observable<any> {
+       return this.http.get(`${this.baseUrl}/user`, { withCredentials: true });
+     }
+   }
+   ```
+
+3. **Intercepteur HTTP**
+
+   Ajoutez un intercepteur pour gérer les réponses non autorisées (401) et rediriger vers la page de login.
+
+   ```typescript
+   import { Injectable } from '@angular/core';
+   import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+   import { Observable, throwError } from 'rxjs';
+   import { catchError } from 'rxjs/operators';
+   import { Router } from '@angular/router';
+
+   @Injectable()
+   export class AuthInterceptor implements HttpInterceptor {
+     constructor(private router: Router) {}
+
+     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+       return next.handle(request).pipe(
+         catchError((error: HttpErrorResponse) => {
+           if (error.status === 401) {
+             this.router.navigate(['/login']);
+           }
+           return throwError(error);
+         })
+       );
+     }
+   }
+   ```
+
+   Et ajoutez l'intercepteur dans le module Angular :
+
+   ```typescript
+   import { HTTP_INTERCEPTORS } from '@angular/common/http';
+   import { AuthInterceptor } from './auth.interceptor';
+
+   @NgModule({
+     providers: [
+       { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+     ]
+   })
+   ```
+
+### 2. **Sécurisation des Routes et API**
+
+#### A. **Protection des Routes API avec Middleware**
+
+Utilisez des middleware pour protéger vos routes et implémenter des stratégies d'autorisation.
+
+```php
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+});
+```
+
+#### B. **Utilisation des Politiques**
+
+Définissez des politiques pour gérer l'autorisation fine-grainée.
+
+1. **Créer une Politique**
+
+   ```sh
+   php artisan make:policy PostPolicy --model=Post
+   ```
+
+2. **Définir des Règles d'Autorisation dans la Politique**
+
+   ```php
+   class PostPolicy {
+     public function view(User $user, Post $post) {
+       return $user->id === $post->user_id;
+     }
+
+     public function update(User $user, Post $post) {
+       return $user->id === $post->user_id;
+     }
+   }
+   ```
+
+3. **Enregistrer la Politique**
+
+   Dans `AuthServiceProvider`, enregistrez la politique :
+
+   ```php
+   protected $policies = [
+       Post::class => PostPolicy::class,
+   ];
+   ```
+
+4. **Utilisation de la Politique dans le Contrôleur**
+
+   ```php
+   public function update(Request $request, Post $post) {
+       $this->authorize('update', $post);
+       // Logique de mise à jour du post...
+   }
+   ```
+
+### 3. **Sécurisation des Communications**
+
+#### A. **Utilisation de HTTPS**
+
+Assurez-vous que votre application utilise HTTPS pour sécuriser les communications entre le client (Angular) et le serveur (Laravel).
+
+#### B. **Protection contre les Attaques CSRF**
+
+Laravel protège par défaut contre les attaques CSRF. Assurez-vous que votre frontend Angular envoie le token CSRF avec chaque requête. Si vous utilisez Laravel Sanctum, cela est géré automatiquement pour les requêtes authentifiées.
+
+### 4. **Configuration de Sécurité Supplémentaire**
+
+#### A. **En-têtes de Sécurité**
+
+Ajoutez des en-têtes de sécurité HTTP pour renforcer la sécurité de votre application.
+
+```php
+public function handle($request, Closure $next)
+{
+    $response = $next($request);
+    $response->headers->set('X-Content-Type-Options', 'nosniff');
+    $response->headers->set('X-Frame-Options', 'DENY');
+    $response->headers->set('X-XSS-Protection', '1; mode=block');
+    $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+
+    return $response;
+}
+```
+
+#### B. **Utilisation de Rate Limiting**
+
+Mettez en place des limites de taux pour protéger votre API contre les abus.
+
+```php
+Route::middleware('throttle:60,1')->group(function () {
+    // Vos routes protégées par limite de taux...
+});
+```
+
+### Conclusion
+
+En suivant ces étapes, vous pourrez sécuriser efficacement votre application avec un backend Laravel et un frontend Angular. La gestion correcte de l'authentification, de l'autorisation, et des communications sécurisées entre le client et le serveur sont essentielles pour garantir la sécurité de votre application.

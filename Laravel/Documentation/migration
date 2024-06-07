@@ -18,3 +18,7 @@
 
 ----- Pour exécuter automatiquement les seeds après les migrations, vous pouvez combiner migrate:fresh et db:seed ---
     php artisan migrate:fresh --seed
+
+
+------ Verifier les routes --------
+    php artisan route:list
