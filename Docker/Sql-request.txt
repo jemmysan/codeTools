@@ -27,10 +27,18 @@
 7- Voir les bases de données
 
     SHOW DATABASES;
-
+- Utiliser une base de données
+    USE database_name
 
 8- Creer une base de données 
 
-    CREATE DATABASE annuaire_startup;
+    CREATE DATABASE database_name;
 
-6- 
+9- Voir les tables 
+
+10- Voir les attibuts d'une table 
+    DESCRIBE database_name;
+
+11- Voir les enregistrements d'une table
+    SELECT * FROM database_name
+

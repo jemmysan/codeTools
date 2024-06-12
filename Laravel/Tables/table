@@ -1,0 +1,16 @@
+
+1------ Add a new table by creating migration first -------
+    php artisan make:migration create_tablenames_table
+
+2------  Add new column to a table ------
+    php artisan make:migration add_columname_to_tablename_table --table=tablename
+
+3------  Supprimer une colonne ------
+    
+
+    php artisan make:migration remove_column_from_table --table=table_name
+
+4------  Modifier une colonne ------
+    composer require doctrine/dbal
+
+    php artisan make:migration modify_column_in_table --table=table_name
