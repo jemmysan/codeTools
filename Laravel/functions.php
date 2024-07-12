@@ -31,3 +31,37 @@
         $reference = strtoupper($implode);
         return $reference = strtoupper($implode); 
     }
+
+
+
+/*************** Reorganiser en ordre ************/
+
+   function incrementation(){
+        $colonne = $request->input('nomcolonne');
+
+     Model::where('colonne', '>=', $colonne)
+            ->increment('colonne', 1);
+    }
+
+/*************** Update Reorganiser en ordre ************/
+    function updateIncrementation(Request $request, $id){
+        
+        request()->validate([
+            'colonne'=>'required',
+        ]);
+        $model = model::findOrFail($id);
+
+        $ordre = $request->input('ordre');
+        model::where('ordre','>=',$ordre)
+                    ->increment('ordre',1);
+
+        $model->update([
+            'colonne'=>$request->input('colonne'),
+        ]);
+
+        $reupdatemodels = model::orderBy('ordre')->get();
+        foreach ($reupdatemodels as $index => $model) {
+            $model->update(['ordre' => $index + 1]);
+        }
+        return redirect()->back()->with('message','model modifier avec succès !');
+    }

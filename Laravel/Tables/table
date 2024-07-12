@@ -13,4 +13,22 @@
 4------  Modifier une colonne ------
     composer require doctrine/dbal
 
-    php artisan make:migration modify_column_in_table --table=table_name
+    php artisan make:migration modify_columnname_in_tablename 
+     public function up()
+        {
+            Schema::table('products', function (Blueprint $table) {
+                $table->text('description')->change();
+            });
+        }
+
+        /**
+        * Reverse the migrations.
+        *
+        * @return void
+        */
+        public function down()
+        {
+            Schema::table('products', function (Blueprint $table) {
+                $table->string('description')->change();
+            });
+        }
