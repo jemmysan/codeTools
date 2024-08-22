@@ -43,6 +43,6 @@
     SELECT * FROM database_name
 
 12- Supprimer une table
-DROP TABLE IF EXISTS your_table_name;
+    DROP TABLE IF EXISTS your_table_name;
 
 

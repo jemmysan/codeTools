@@ -1,17 +1,24 @@
+------ Creér une nouvelle table --------
+    php artisan make:migration create_tableName_table
+
+
+
 ------ Créer une nouvelle colonne -------
 1- php artisan make:migration add_new_column_to_table_name --table=table_name
 2- modifier la methode up en y ajoutant l'attribut
 
 ---- SoftDeletes ---
-1- Ajout dans le modeles SoftDeletes
-2- Créer colonne delete_at si elle n'existe pas
-    => add_deleted_at_to_table_name
-3- Migrates en ajoutant  $table->softDeletes() dans la methode up()
-    et  $table->dropColumn('deleted_at') a la methode down;
+    1- Ajout dans le modeles SoftDeletes
+
+    2- Créer colonne delete_at si elle n'existe pas
+        => add_deleted_at_to_table_name
+
+    3- Migrate en ajoutant $table->softDeletes() dans la methode up
+        et $table->dropColumn('deleted_at') a la methode down;
 
 
 ---- Vider la base de données en supprimant toutes les tables -----
-  php artisan migrate:reset
+    php artisan migrate:reset
 
 ---- Vider les données des tables de la BD -----
     php artisan migrate:fresh
@@ -22,3 +29,10 @@
 
 ------ Verifier les routes --------
     php artisan route:list
+
+
+------ Modifier une colonne --------
+    php artisan make:migration modify_columnNam_in_tableName_table --table=tableName
+
+------ Supprimer une colonne --------
+    php artisan make:migration remove_colomnName_column_from_tableName_table --table=tableName

@@ -21,4 +21,16 @@ if (!$existArticle) {
         // Utiliser l'ID de l'article existant pour associer les fournisseurs
         return $existArticle->fournisseurs()->attach($request->fournisseurs);
     });
+};
+
+
+/*--------------- Supprimer id d'une relation one to many ou le 
+many a migré -------*/
+
+function delete($id)
+{
+    Indicateur::where('mesure_id',$id)->update(['mesure_id'=>null]);
+    $mesure = UniteMesure::find($id);
+    $mesure->delete();
+    return redirect()->back()->with('success', 'Unité de mesure supprimée avec succès !');
 }

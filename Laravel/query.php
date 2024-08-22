@@ -1,6 +1,6 @@
 <?php
 
-/*********** LIKE ********/
+/*********** LIKE pour un filtre ********/
 return Model::where('first_name','like','%'.$keyWord.'%');
 
 

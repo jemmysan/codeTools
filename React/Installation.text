@@ -1,0 +1,11 @@
+1- Global react installing
+   npm install -g create-react-app
+
+2- Create a new react project 
+    create-react-project ProjectName
+
+3- Allumer server
+    npm start 
+
+4- Installation react router pour gerer le routage 
+    npm install react-router-dom --save
