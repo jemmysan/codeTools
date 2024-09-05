@@ -17,3 +17,6 @@ implode('-', $chaine);
 
 // Diviser la chaîne en parties en fonction du tiret
 explode('-', $chaine);
+
+// Inserer avec la date actuelle
+// 'date'=> Carbon::now()->format('Y/m/d')
