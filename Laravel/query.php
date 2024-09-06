@@ -1,7 +1,7 @@
 <?php
 
 /*********** LIKE pour un filtre ********/
-return Model::where('first_name','like','%'.$keyWord.'%');
+return Model::where('attribut','like','%'.$keyWord.'%');
 
 
 /********** Inserer plusiurs fois dans une table d'association *******/
