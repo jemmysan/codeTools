@@ -18,7 +18,7 @@
 /**********    Validation image *************/
 ['required|image|mimes:jpeg,png,jpg,gif,svg|max:{$taille}'];
 
-/**********    Validation emailo *************/
+/**********    Validation email *************/
 ['required|email|max:255|unique:users'];
 
 /**********    Validation mot de passe *************/

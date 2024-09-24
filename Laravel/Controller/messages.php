@@ -16,6 +16,7 @@ class MessageController extends Controller
 
 
     public function  __construct(){
+        
         $success = 'successfully';
 
         $this->handleException = [
@@ -24,7 +25,7 @@ class MessageController extends Controller
             2 =>'deleted '.$success,
             3 =>'restored '.$success,
             4 =>'Not found',
-            5 =>'An error occured', 
+            5 =>'Database error', 
             6 =>'An unexpected error occurred',
         ];
     }
@@ -63,6 +64,10 @@ class MessageController extends Controller
             'message'=>$message
         ];
         return response()->json($response);
+    }
+
+    public function handleException($message, $exception){
+        return $message . $exception;
     }
 
 }

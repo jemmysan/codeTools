@@ -9,6 +9,8 @@
     
 
     php artisan make:migration remove_column_from_table --table=table_name
+    
+    $table->dropColumn('column_name');
 
 4------  Modifier une colonne ------
     composer require doctrine/dbal
