@@ -21,4 +21,5 @@
 7-- Pour Acceder aux bases de données via l'interface :
     - Ouvrez votre terminal tapez docker container ls pour recuperer le nom de l'image
     - Taper docker inspect <nom de l'image>
+    - Récuperer l'adresse Ip et saisir l'adresse et les indentifiant pour vous acceder a votre IG
   
