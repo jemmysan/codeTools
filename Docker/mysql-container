@@ -1,0 +1,24 @@
+1--- Créer le fichier docker-composer.yml
+2-- Configurer le ficher par copie et colle du code suivant decommenté
+  #   services:
+  # db : 
+  #   image : mysql
+  #   environment : 
+  #     MYSQL_ROOT_PASSWORD : root_password
+  # phpMyAdmin :
+  #   image : phpmyadmin
+  #   environment :
+  #     PMA_ARBITRARY : 1
+  #   ports : 
+  #     - "8080:80"
+
+3--- Acceder la racine du dossier ou se trouve le ficher
+4--- Tapez la commande
+      Docker-compose up 
+      (patienter l'instant de creation de l'images dans un conteneur)
+5--- Lancer votre navigateur localhost:8080
+6--- Acceder a l'interface graphique phpMyAdmin
+7-- Pour Acceder aux bases de données via l'interface :
+    - Ouvrez votre terminal tapez docker container ls pour recuperer le nom de l'image
+    - Taper docker inspect <nom de l'image>
+  
