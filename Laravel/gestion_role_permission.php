@@ -51,3 +51,41 @@
     php artisan db:seed --class=RolePermissionSeeder
 
 8 - Ajout des methode dans le controller 
+
+ public function assignRoleToUser(Request $request, $userId)
+    {
+        try{
+            $user = User::findOrFail($userId);
+            $role = $request->input('role');
+            $user->assignRole($role);
+            return $this->message->succedRequest('Role '.$this->message->exception[8]);
+        }catch (QueryException $e){
+            return $this->message->handleException($this->message->exception[5] ,$e->getMessage());
+        } catch (Exception $e){
+            return $this->message->handleException($this->message->exception[6] , $e->getMessage());
+        };
+            
+    }
+
+
+    public function unassignRoleToUser(Request $request, $userId)
+    {
+        try{
+            $user = User::findOrFail($userId);
+            if (!$request->has('role') || empty($request->role)) {
+                return 'Role';
+            }
+            $role = Role::findByName($request->role, 'web');
+    
+            if (!$role) {
+                return 'Role not found';
+            }
+            $user->removeRole($role);
+            return $this->message->succedRequest('Role '.$this->message->exception[9]);
+        }catch (QueryException $e){
+            return $this->message->handleException($this->message->exception[5] ,$e->getMessage());
+        } catch (Exception $e){
+            return $this->message->handleException($this->message->exception[6] , $e->getMessage());
+        };
+        
+    }
