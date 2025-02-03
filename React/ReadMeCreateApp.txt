@@ -41,5 +41,9 @@
 9- Define Login page 
 
     - Create axiosClient.js for requests
+
+------------------------------------------------------------
+React data table paginate
+https://react-data-table-component.netlify.app/?path=/docs/pagination-options--options
     
 
