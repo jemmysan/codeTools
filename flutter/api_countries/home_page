@@ -1,0 +1,75 @@
+import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+  @override
+  State<MyHomePage> createState() => _MyHomePage();
+}
+
+class _MyHomePage extends State<MyHomePage> {
+  final dio = Dio();
+  List countries = [];
+
+  getCountries() async {
+    try {
+      final response = await dio.get('https://restcountries.com/v3.1/all');
+      setState(() {
+        countries = response.data;
+      });
+    } catch (e) {
+      print("Erreur lors dx²e la récupération des pays: $e");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCountries(); // Charge les pays au démarrage
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('List of countries'),
+        actions: [
+          IconButton(
+            onPressed: getCountries,
+            icon: const Icon(Icons.refresh),
+          )
+        ],
+        elevation: 12,
+        backgroundColor: Colors.blueGrey[900],
+        foregroundColor: Colors.white,
+      ),
+      body: countries.isEmpty
+          ? const Center(child: CircularProgressIndicator()) // Loader si vide
+          : ListView.builder(
+              itemCount: countries.length,
+              itemBuilder: (context, index) {
+                final country = countries[index];
+
+                // Vérifie si la clé 'name' et 'common' existent
+                String countryName = country['name']?['common'] ?? 'Unknown';
+
+                // Vérifie si la clé 'capital' existe et n'est pas vide
+                String capital = (country['capital'] != null &&
+                        country['capital'] is List &&
+                        country['capital'].isNotEmpty)
+                    ? country['capital'][0]
+                    : 'No capital';
+
+                // Vérifie si la clé 'flag' existe
+                String flag = country['flag'] ?? '🏳';
+
+                return ListTile(
+                  leading: Text(flag, style: const TextStyle(fontSize: 30)),
+                  title: Text(countryName),
+                  subtitle: Text(capital),
+                );
+              },
+            ),
+    );
+  }
+}
