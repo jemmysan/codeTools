@@ -5,44 +5,87 @@
 
 class ResponseMessage extends Controller
 {
-    public function succedRequest($result,$message)
+    public function  __construct(){
+        
+        $success = 'successfully';
+
+        $this->exception = [
+            0 =>'created '.$success,
+            1 =>'updated '.$success,
+            2 =>'deleted '.$success,
+            3 =>'restored '.$success,
+            4 =>'Not found ',
+            5 =>'Database error', 
+            6 =>'An unexpected error occurred',
+            7 => 'Registered '.$success,
+            8 => 'Assigned '.$success,
+            9 => 'Unassigned '.$success
+        ];
+    }
+    
+    public function succedRequest($message)
     {
         $response = [
-            'status'=>200,
-            'success'=>true,
-            'data'=>$result,
-            'message'=>$message
+            'status'=> 200,
+            'message'=> $message
+        ];
+        return response()->json($response);
+    } 
+
+    public function notFound($message){
+        return $response = [
+            'status' => 403,
+            'message'=> $message
+        ];
+    }
+
+    public function succedRequestWithData($data)
+    {
+        $response = [
+            'status'=> 200,
+            'data'=>$data,
         ];
         return response()->json($response);
     }
 
-    public function errorRequest($message,$status)
+    public function failedRequest($message)
     {
         $response = [
+            'status'=> 404,
             'message'=>$message,
-            'status'=>$status
         ];
         return response()->json($response);
     }
 
-    public function succedRequestWithData($result,$message)
+    public function errorRequest($status)
     {
-        $response = [
-            'status'=>200,
-            'success'=>true,
-            'data'=>$result,
-            'message'=>$message
-        ];
+        if($status === 404){
+            $response = [
+                'status'=> 404,
+                'message'=>'Id introuvable'
+            ];
+        }
+
+        if($status === 409){
+            $response = [
+                'status'=>409,
+                'message'=>'Conflit avec la base de données'
+            ];
+        }
+
+        if($status === 500){
+            $response = [
+                'status'=>500,
+                'message'=>'Erreur inattendu'
+            ];
+        }
+
         return response()->json($response);
     }
 
-    public function failedRequest($message,$status)
-    {
-        $response = [
-            'status'=>$status,
-            'message'=>$message,
-        ];
-        return response()->json($response);
+    public function handleException($message){
+        return $message ;
     }
+
+
 }
-
