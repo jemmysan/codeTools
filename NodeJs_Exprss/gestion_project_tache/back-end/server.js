@@ -2,8 +2,10 @@ import 'dotenv/config'
 import express from 'express';
 import cors from  'cors'
 import connectDB from './config/db.js';
-import authRouter from './routes/auth.routes.js';
+import {errorHandler} from './middlewares/error.middleware.js'
+import authRoutes from './routes/auth.routes.js';
 
+// dotenv.config();
 
 // Initialisation
 connectDB(); // Connexion to MongoDB
@@ -19,7 +21,8 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
-app.use('/api/auth', authRouter);
+
+app.use('/api/auth', authRoutes);
 
 // Error handler
 app.use(errorHandler);

@@ -12,7 +12,4 @@ const loginValidation = Joi.object({
 })
 
 
-export {
-    registerValidation,
-    loginValidation
-}
+export { registerValidation, loginValidation }
