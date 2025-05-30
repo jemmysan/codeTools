@@ -1,4 +1,4 @@
-import { Joi } from 'express-joi-validations';
+import  *  as  Joi from 'joi'
 
 const registerValidation = Joi.object({
     name : Joi.string().min(3).max(50).required,

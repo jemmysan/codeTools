@@ -20,7 +20,7 @@ VI- Set your database with mongodb
   - Install mogoose
   - Install cors
   - Install bcryptjs 
-  - Intall jsonwebtoken
+  - Intall 
   - Install Joi
 
 VII- Structuring folders 

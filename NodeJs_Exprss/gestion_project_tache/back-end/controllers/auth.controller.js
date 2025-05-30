@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken';
 import 'dotenv/config'
 import { User } from '../models/user.model.js';
 
-
 const generateToken = (user) => {
   return jwt.sign(
     { 
@@ -17,7 +16,7 @@ const generateToken = (user) => {
 const register = async (req, res) => {
   const { name, email, password } = req.body;
   const userExists = await User.findOne({ email });
-  if (userExists) return res.status(400).json({ message: 'Utilisateur déjà existant' });
+  if (userExists) return res.status(400).json({ message: 'User already exists' });
 
   const user = await User.create({ name, email, password });
   res.status(201).json({ token: generateToken(user) });
