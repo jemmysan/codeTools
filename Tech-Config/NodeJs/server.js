@@ -1,41 +1,43 @@
-import 'dotenv/config'
-import connectDB from './config/db.js';
-import express from 'express';
+import 'dotenv/config';
+import express from 'express'
 import cors from  'cors'
-import helmet from "helmet";
-import morgan from 'morgan';  
-import {errorHandler} from './middlewares/error.middleware.js'
-import authRouter from './routes/auth.router.js';
-import categoryRouter from './routes/category.router.js';
-import { bookRouter } from './routes/book.router.js';
+import connectToDB from './config/db.js';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import authRouter from './route/auth.routes.js';
+import userRoute from './route/user.routes.js';
+import cookieParser from 'cookie-parser';
+import { PORT, Router } from './index.js';
 
 
 
-// Initialisation
-connectDB(); // Connexion to MongoDB
+// ===  - CREATE SERVER - ===
 const app = express();
 
-// Middlewares
+// ==== - CONNECTION TO DATABASE - =====
+connectToDB();
+
+// ==== - MIDDLEWARES - =====
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cookieParser());
 
 
-// Routes
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
+// === 4 - CONFIGURE ROUTES ===
+// Connect Route handler to server
+Router(app);
 
+
+// Connect Route handler to server in not found route case
+// NotFoundRoute(server)
+
+//--- routes ------//
 
 app.use('/api/auth', authRouter);
-app.use('/api/categories', categoryRouter);
-app.use('/api/books', bookRouter);
+app.use('/api/users', userRoute)
 
-
-// Error handler
-app.use(errorHandler);
 
 // Server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, ()=> console.log(`App is running on http://localhost:${PORT}`))

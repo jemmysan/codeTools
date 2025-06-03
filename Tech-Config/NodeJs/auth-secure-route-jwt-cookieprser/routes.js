@@ -1,0 +1,1 @@
+modelRouter.post('/method', authenticate, controllerMethod);

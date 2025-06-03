@@ -1,5 +1,4 @@
 /------  Project Documentation  ------/
-
 - # I- Technologies
     - React.js
     - Node.js
@@ -9,14 +8,14 @@
 
 - # II- Installation
     - # A- Environment
-        - npm init
+        - npm init -y
         - npm install
         - server.js / index.js
 
     - # B- Dependances 
+        - express
         - mongodb
         - mongoose
-        - express
         - nodemon
         - dotenv
         - bcryptjs
@@ -51,4 +50,3 @@
             - controllers
             - routes
             - utils
-            - validations
