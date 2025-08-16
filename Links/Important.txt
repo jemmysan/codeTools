@@ -3,3 +3,21 @@ https://www.youtube.com/watch?v=jGVHEgqkToc
 
 Convert Figma to flutter
 https://www.youtube.com/watch?v=YFvFK-qNnZw
+
+
+Tools for grid
+https://flexboxlabs.netlify.app/
+
+Grid examples
+https://gridbyexample.com/examples/
+
+Flexbox property
+https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flexbox-properties
+
+
+JavaScript Courses
+https://eloquentjavascript.net
+
+
+Js Projects
+https://github.com/HuXn-WebDev/HTML-CSS-JavaScript-100-Projects
