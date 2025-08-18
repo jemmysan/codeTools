@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import dotenv from 'dotenv'
 import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
@@ -6,12 +6,12 @@ import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
 import connectToDB from './database/dbConnection.js'
 import { errorMiddleware } from './middlewares/errorHandler.js'
-
+import { removeUnverifiedAccounts } from './automation/removeUnverifiedAccounts.js'
+import authRouter from './routes/authRoute.js'
 
 // === - CREATE SERVER ===
 export const app = express();
-
-
+dotenv.config({path : './.env'})
 
 // === - MIDDLEWARES ===
 // Configuration CORS - Définie AVANT utilisation
@@ -39,7 +39,10 @@ app.get('/', (req, res) => {
 });
 
 // Routes API
+app.use('/api',authRouter)
 
+// === - Deleting unverified accounts ===
+removeUnverifiedAccounts();
 
 // === - CONNECTION TO DATABASE ===
 connectToDB();
