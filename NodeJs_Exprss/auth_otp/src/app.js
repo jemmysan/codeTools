@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 app.use('/api',authRouter)
 
 // === - Deleting unverified accounts ===
-removeUnverifiedAccounts();
+// removeUnverifiedAccounts();
 
 // === - CONNECTION TO DATABASE ===
 connectToDB();

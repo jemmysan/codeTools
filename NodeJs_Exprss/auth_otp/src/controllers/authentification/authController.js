@@ -9,63 +9,102 @@ import { sendToken } from "../../utils/auth/sendToken.js";
 
 
 //===========  Methode d'inscription Utilisateur  ==============
-
 export const register = catchAsyncError(async (req, res, next) => {
   try {
     const { name, email, phone, password, verificationMethod } = req.body;
+    
+    // Validation des champs requis
     if (!name || !email || !phone || !password || !verificationMethod) {
-      return next(new ErrorHandler("All fields are required.", 400));
+      return next(new ErrorHandler("Tous les champs sont requis.", 400));
     }
 
+    // Validation du numéro de téléphone
     function validatePhoneNumber(phone) {
-      // Regex pour numéros sénégalais: +221 suivi de 7 ou 8 puis 7 chiffres
       const phoneRegex = /^\+221(77|76|78|70)\d{7}$/;
       return phoneRegex.test(phone);
     }
 
     if (!validatePhoneNumber(phone)) {
-      return next(new ErrorHandler("Invalid phone number.", 400));
+      return next(new ErrorHandler("Numéro de téléphone invalide.", 400));
     }
 
-    const existingUser = await User.findOne({
+    // Vérifier si un utilisateur VERIFIÉ existe déjà
+    const existingVerifiedUser = await User.findOne({
       $or: [
         { email, accountVerified: true },
         { phone, accountVerified: true },
       ],
     });
 
-    if (existingUser) {
-      return next(new ErrorHandler("Phone or Email is already used.", 400));
+    if (existingVerifiedUser) {
+      return next(new ErrorHandler("Ce numéro ou email est déjà utilisé.", 400));
     }
 
-    const registerationAttemptsByUser = await User.find({
+    // Vérifier si un utilisateur NON VERIFIÉ existe déjà
+    const existingUnverifiedUser = await User.findOne({
       $or: [
-        { phone, accountVerified: false },
         { email, accountVerified: false },
+        { phone, accountVerified: false },
       ],
     });
 
-    if (registerationAttemptsByUser.length > 3) {
-      return next(
-        new ErrorHandler(
-          "You have exceeded the maximum number of attempts (3). Please try again after an hour.",
-          400
-        )
+    // Cas 1: Utilisateur non vérifié existe déjà → régénérer le code OTP
+    if (existingUnverifiedUser) {
+      // Vérifier les tentatives de registration
+      const registrationAttempts = await User.countDocuments({
+        $or: [
+          { phone, accountVerified: false },
+          { email, accountVerified: false },
+        ],
+      });
+
+      if (registrationAttempts > 3) {
+        return next(
+          new ErrorHandler(
+            "Vous avez dépassé le nombre maximum de tentatives (3). Réessayez dans une heure.",
+            400
+          )
+        );
+      }
+
+      // Régénérer le code de vérification
+      const verificationCode = await existingUnverifiedUser.generateVerificationCode();
+      await existingUnverifiedUser.save();
+
+      // Envoyer le nouveau code
+      await sendVerificationCode(
+        verificationMethod,
+        verificationCode,
+        existingUnverifiedUser.name,
+        existingUnverifiedUser.email,
+        existingUnverifiedUser.phone,
+        res
       );
+
+      return; // Important: arrêter l'exécution ici
     }
 
+    // Cas 2: Aucun utilisateur existant → créer un nouveau user
     const userData = { name, email, phone, password };
+    const newUser = await User.create(userData);
+    const verificationCode = await newUser.generateVerificationCode();
+    await newUser.save();
 
-    const user = await User.create(userData);
-    const verificationCode = await user.generateVerificationCode();
-    await user.save();
+    // Envoyer le code de vérification
+    await sendVerificationCode(
+      verificationMethod,
+      verificationCode,
+      newUser.name,
+      newUser.email,
+      newUser.phone,
+      res
+    );
 
-    sendVerificationCode(verificationMethod, verificationCode, name, email, phone, res);
   } catch (error) {
+    console.error("Register error:", error);
     next(error);
   }
 });
-
 
 
 
