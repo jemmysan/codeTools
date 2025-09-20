@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmaps Technologies Séparées</title>
+    <style>
+        :root {
+            --node-color: #8cc84b;
+            --react-native-color: #61dafb;
+            --spring-color: #6db33f;
+            --completed: #4caf50;
+            --in-progress: #ff9800;
+            --not-started: #e0e0e0;
+            --card-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .roadmaps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .roadmap {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .roadmap-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .tech-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+        }
+        
+        .node .roadmap-header { border-bottom-color: var(--node-color); }
+        .react-native .roadmap-header { border-bottom-color: var(--react-native-color); }
+        .spring .roadmap-header { border-bottom-color: var(--spring-color); }
+        
+        .progress-container {
+            margin: 20px 0;
+            background: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 20px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .node .progress-bar { background: var(--node-color); }
+        .react-native .progress-bar { background: var(--react-native-color); }
+        .spring .progress-bar { background: var(--spring-color); }
+        
+        .progress-text {
+            text-align: center;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .category {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .category h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid;
+        }
+        
+        .node .category h3 { border-bottom-color: var(--node-color); }
+        .react-native .category h3 { border-bottom-color: var(--react-native-color); }
+        .spring .category h3 { border-bottom-color: var(--spring-color); }
+        
+        .skill-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .skill-item:hover {
+            background-color: rgba(0,0,0,0.03);
+        }
+        
+        .skill-item input {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+        
+        .skill-item label {
+            flex: 1;
+            cursor: pointer;
+        }
+        
+        .completed {
+            color: var(--completed);
+            text-decoration: line-through;
+        }
+        
+        .resources {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .resources h2 {
+            margin-bottom: 15px;
+        }
+        
+        .resource-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .resource-card {
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .resource-card h4 {
+            margin: 0 0 10px 0;
+        }
+        
+        .reset-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 25px;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-btn:hover {
+            background: #ff6b7b;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .categories {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 Roadmaps Technologies Séparées</h1>
+        <p>Trois roadmaps complètes pour maîtriser Node.js, React Native et Spring Boot</p>
+    </div>
+    
+    <div class="roadmaps-container">
+        <!-- Node.js Roadmap -->
+        <div id="node-roadmap" class="roadmap node">
+            <div class="roadmap-header">
+                <div class="tech-icon">🔗</div>
+                <div>
+                    <h2>Node.js Roadmap</h2>
+                    <p>Maîtrisez le développement backend avec Node.js</p>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="node-progress-bar" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="node-progress-text">Progression: 0%</div>
+            
+            <div class="categories">
+                <div class="category">
+                    <h3>Fondamentaux</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-1" data-weight="1">
+                        <label for="node-1">Modules NPM et gestion des dépendances</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-2" data-weight="1">
+                        <label for="node-2">Système de fichiers et buffers</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-3" data-weight="1">
+                        <label for="node-3">Event Loop et architecture asynchrone</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-4" data-weight="1">
+                        <label for="node-4">Callbacks, Promises, async/await</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-5" data-weight="1">
+                        <label for="node-5">Streams et buffers</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>Express.js</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-6" data-weight="1">
+                        <label for="node-6">Routing et middleware system</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-7" data-weight="1">
+                        <label for="node-7">Gestion des erreurs</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-8" data-weight="1">
+                        <label for="node-8">Template engines (EJS, Pug)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-9" data-weight="1">
+                        <label for="node-9">Serveur de fichiers statiques</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-10" data-weight="1">
+                        <label for="node-10">REST API design</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>Base de données</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-11" data-weight="1">
+                        <label for="node-11">MongoDB avec Mongoose (ODM)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-12" data-weight="1">
+                        <label for="node-12">PostgreSQL/MySQL avec Sequelize</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-13" data-weight="1">
+                        <label for="node-13">Relations et migrations</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-14" data-weight="1">
+                        <label for="node-14">Transactions et validation</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-15" data-weight="1">
+                        <label for="node-15">Redis pour le caching</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>Sécurité</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-16" data-weight="1">
+                        <label for="node-16">JWT (JSON Web Tokens)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-17" data-weight="1">
+                        <label for="node-17">Bcrypt pour le hashage</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-18" data-weight="1">
+                        <label for="node-18">Helmet.js et CORS</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-19" data-weight="1">
+                        <label for="node-19">Rate limiting</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-20" data-weight="1">
+                        <label for="node-20">Validation avec Joi ou Zod</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>Architecture</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-21" data-weight="1">
+                        <label for="node-21">Pattern MVC/MVVC</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-22" data-weight="1">
+                        <label for="node-22">Clean Architecture/Hexagonal</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-23" data-weight="1">
+                        <label for="node-23">Dependency Injection</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-24" data-weight="1">
+                        <label for="node-24">Tests unitaires et d'intégration (Jest)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-25" data-weight="1">
+                        <label for="node-25">Logging (Winston, Morgan)</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>Performances</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-26" data-weight="1">
+                        <label for="node-26">Clustering et PM2</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-27" data-weight="1">
+                        <label for="node-27">Caching avec Redis</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-28" data-weight="1">
+                        <label for="node-28">Message queues (RabbitMQ, Bull)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-29" data-weight="1">
+                        <label for="node-29">Load testing (Artillery)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="node-30" data-weight="1">
+                        <label for="node-30">Optimisation des requêtes DB</label>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="reset-btn" onclick="resetProgress('node')">Réinitialiser Node.js</button>
+        </div>
+        
+        <!-- React Native Roadmap -->
+        <div id="react-native-roadmap" class="roadmap react-native">
+            <div class="roadmap-header">
+                <div class="tech-icon">📱</div>
+                <div>
+                    <h2>React Native Roadmap</h2>
+                    <p>Développez des applications mobiles cross-platform</p>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="react-native-progress-bar" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="react-native-progress-text">Progression: 0%</div>
+            
+            <div class="categories">
+                <div class="category">
+                    <h3>Fondamentaux</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-1" data-weight="1">
+                        <label for="rn-1">JSX et composants</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-2" data-weight="1">
+                        <label for="rn-2">Props et state</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-3" data-weight="1">
+                        <label for="rn-3">Hooks (useState, useEffect, etc.)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-4" data-weight="1">
+                        <label for="rn-4">Cycle de vie des composants</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-5" data-weight="1">
+                        <label for="rn-5">Gestion des événements</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>Ecosystem Expo</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-6" data-weight="1">
+                        <label for="rn-6">Navigation (React Navigation)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-7" data-weight="1">
+                        <label for="rn-7">Styling avec StyleSheet</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-8" data-weight="1">
+                        <label for="rn-8">Tailwind avec NativeWind</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-9" data-weight="1">
+                        <label for="rn-9">Gestion des assets</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-10" data-weight="1">
+                        <label for="rn-10">Expo SDK et APIs natives</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>State Management</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-11" data-weight="1">
+                        <label for="rn-11">Context API</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-12" data-weight="1">
+                        <label for="rn-12">Redux Toolkit</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-13" data-weight="1">
+                        <label for="rn-13">Zustand</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-14" data-weight="1">
+                        <label for="rn-14">Persistance d'état</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-15" data-weight="1">
+                        <label for="rn-15">React Query pour data fetching</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>APIs natives</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-16" data-weight="1">
+                        <label for="rn-16">Caméra et gallery</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-17" data-weight="1">
+                        <label for="rn-17">Géolocalisation</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-18" data-weight="1">
+                        <label for="rn-18">Notifications push</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-19" data-weight="1">
+                        <label for="rn-19">Stockage local (AsyncStorage)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-20" data-weight="1">
+                        <label for="rn-20">Accès aux contacts et calendrier</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>Performance</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-21" data-weight="1">
+                        <label for="rn-21">Memoization (React.memo, useMemo)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-22" data-weight="1">
+                        <label for="rn-22">Optimisation FlatList</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-23" data-weight="1">
+                        <label for="rn-23">Code splitting</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-24" data-weight="1">
+                        <label for="rn-24">Hermes Engine</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-25" data-weight="1">
+                        <label for="rn-25">Optimisation des images</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>Testing & Déploiement</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-26" data-weight="1">
+                        <label for="rn-26">Jest pour tests unitaires</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-27" data-weight="1">
+                        <label for="rn-27">React Testing Library</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-28" data-weight="1">
+                        <label for="rn-28">Detox pour tests E2E</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-29" data-weight="1">
+                        <label for="rn-29">EAS Build pour les builds natifs</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="rn-30" data-weight="1">
+                        <label for="rn-30">Publication sur les stores</label>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="reset-btn" onclick="resetProgress('react-native')">Réinitialiser React Native</button>
+        </div>
+        
+        <!-- Spring Boot Roadmap -->
+        <div id="spring-roadmap" class="roadmap spring">
+            <div class="roadmap-header">
+                <div class="tech-icon">🌱</div>
+                <div>
+                    <h2>Spring Boot Roadmap</h2>
+                    <p>Développez des applications backend robustes avec Java</p>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="spring-progress-bar" style="width: 0%"></div>
+            </div>
+            <div class="progress-text" id="spring-progress-text">Progression: 0%</div>
+            
+            <div class="categories">
+                <div class="category">
+                    <h3>Fondamentaux</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-1" data-weight="1">
+                        <label for="spring-1">Spring Initializr et structure</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-2" data-weight="1">
+                        <label for="spring-2">Contrôleurs et annotations MVC</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-3" data-weight="1">
+                        <label for="spring-3">Configuration properties</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-4" data-weight="1">
+                        <label for="spring-4">Profiles d'environnement</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-5" data-weight="1">
+                        <label for="spring-5">Spring Boot Actuator</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>API REST</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-6" data-weight="1">
+                        <label for="spring-6">DTO pattern et mappers (MapStruct)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-7" data-weight="1">
+                        <label for="spring-7">Validation (Bean Validation)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-8" data-weight="1">
+                        <label for="spring-8">Exception handling global</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-9" data-weight="1">
+                        <label for="spring-9">Documentation OpenAPI/Swagger</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-10" data-weight="1">
+                        <label for="spring-10">Versioning d'API</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>Persistence des données</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-11" data-weight="1">
+                        <label for="spring-11">Spring Data JPA et repositories</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-12" data-weight="1">
+                        <label for="spring-12">Entités JPA et relations</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-13" data-weight="1">
+                        <label for="spring-13">Query methods et @Query</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-14" data-weight="1">
+                        <label for="spring-14">Transactions management</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-15" data-weight="1">
+                        <label for="spring-15">Migrations avec Flyway/Liquibase</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>Sécurité</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-16" data-weight="1">
+                        <label for="spring-16">JWT authentication</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-17" data-weight="1">
+                        <label for="spring-17">OAuth2 et OpenID Connect</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-18" data-weight="1">
+                        <label for="spring-18">Role-based access control</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-19" data-weight="1">
+                        <label for="spring-19">Password encoding</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-20" data-weight="1">
+                        <label for="spring-20">Spring Security config avancée</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>Architecture Avancée</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-21" data-weight="1">
+                        <label for="spring-21">Custom starters et auto-configuration</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-22" data-weight="1">
+                        <label for="spring-22">Events et listeners</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-23" data-weight="1">
+                        <label for="spring-23">AOP (Aspect-Oriented Programming)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-24" data-weight="1">
+                        <label for="spring-24">Scheduling et tâches async</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-25" data-weight="1">
+                        <label for="spring-25">Caching avec Spring Cache</label>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <h3>Microservices & Cloud</h3>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-26" data-weight="1">
+                        <label for="spring-26">Spring Cloud (Service discovery)</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-27" data-weight="1">
+                        <label for="spring-27">API Gateway pattern</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-28" data-weight="1">
+                        <label for="spring-28">Resilience4j pour circuit breaker</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-29" data-weight="1">
+                        <label for="spring-29">Distributed tracing</label>
+                    </div>
+                    <div class="skill-item">
+                        <input type="checkbox" id="spring-30" data-weight="1">
+                        <label for="spring-30">Déploiement Docker et Kubernetes</label>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="reset-btn" onclick="resetProgress('spring')">Réinitialiser Spring Boot</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize progress for each technology
+        function initProgress(tech) {
+            let completed = 0;
+            const totalSkills = 30;
+            const checkboxes = document.querySelectorAll(`#${tech}-roadmap input[type="checkbox"]`);
+            
+            // Check if there's saved progress
+            if (localStorage.getItem(`${tech}Progress`)) {
+                const progress = JSON.parse(localStorage.getItem(`${tech}Progress`));
+                
+                checkboxes.forEach(checkbox => {
+                    if (progress[checkbox.id]) {
+                        checkbox.checked = true;
+                        completed++;
+                    }
+                });
+            }
+            
+            updateProgressBar(tech, completed, totalSkills);
+            
+            // Add event listeners to all checkboxes
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    saveProgress(tech, this.id, this.checked);
+                });
+            });
+        }
+        
+        // Update progress bar
+        function updateProgressBar(tech, completed, total) {
+            const percentage = (completed / total) * 100;
+            document.getElementById(`${tech}-progress-bar`).style.width = `${percentage}%`;
+            document.getElementById(`${tech}-progress-text`).textContent = `Progression: ${Math.round(percentage)}%`;
+        }
+        
+        // Save progress to localStorage
+        function saveProgress(tech, id, isCompleted) {
+            let progress = {};
+            
+            if (localStorage.getItem(`${tech}Progress`)) {
+                progress = JSON.parse(localStorage.getItem(`${tech}Progress`));
+            }
+            
+            progress[id] = isCompleted;
+            localStorage.setItem(`${tech}Progress`, JSON.stringify(progress));
+            
+            // Update overall progress
+            const completed = Object.values(progress).filter(Boolean).length;
+            updateProgressBar(tech, completed, 30);
+        }
+        
+        // Reset progress for a specific technology
+        function resetProgress(tech) {
+            if (confirm(`Êtes-vous sûr de vouloir réinitialiser toute votre progression ${tech}?`)) {
+                localStorage.removeItem(`${tech}Progress`);
+                
+                // Uncheck all checkboxes
+                document.querySelectorAll(`#${tech}-roadmap input[type="checkbox"]`).forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                
+                updateProgressBar(tech, 0, 30);
+            }
+        }
+        
+        // Initialize all roadmaps on page load
+        window.onload = function() {
+            initProgress('node');
+            initProgress('react-native');
+            initProgress('spring');
+        };
+    </script>
+</body>
+</html>

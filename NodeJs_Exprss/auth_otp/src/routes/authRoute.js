@@ -1,5 +1,5 @@
 import express from 'express';
-import { register, login, logout } from '../controllers/authentification/authController.js';
+import { register, login, logout } from '../controllers/authController.js';
 import { verifyOTP } from '../utils/auth/verifyOTP.js';
 
 

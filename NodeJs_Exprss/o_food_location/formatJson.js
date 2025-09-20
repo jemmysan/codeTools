@@ -12,3 +12,21 @@
     "source": "geocoded"
   }
 }
+
+
+
+  rating: {
+    average: {
+      type: Number,
+      min: 0,
+      max: 5,
+      default: 0
+    },
+    count: {
+      type: Number,
+      default: 0
+    }
+  }
+
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }

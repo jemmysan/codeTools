@@ -15,6 +15,11 @@ const restaurantSchema = new mongoose.Schema({
     coordinates: {
       type: [Number], // [longitude, latitude]
       required: true
+    },
+     source: {
+      type: String,
+      enum: ["gps", "manual", "geocoded"],
+      default: "manual"
     }
   }
 });
