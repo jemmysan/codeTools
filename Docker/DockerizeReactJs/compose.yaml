@@ -1,0 +1,17 @@
+
+# En dévelopment
+services:
+  web:
+    build:
+      context: . # Le répertoire contenant le Dockerfile
+    ports:
+      - 5173:5173 # Mappe le port 5173 du conteneur au port 5173 de l'hôte
+    volumes:
+      - .:/app # Bind mount pour refléter les changements en développement
+      - /app/node_modules
+    environment:
+      NODE_ENV: development
+      CHOKIDAR_USEPOLLING: "true"
+    
+
+
