@@ -1,0 +1,88 @@
+/* Conteneur principal avec bords arrondis et fond blanc */
+.rbc-calendar {
+  background-color: white;
+  border-radius: 24px;
+  padding: 20px;
+  font-family: 'Inter', sans-serif;
+  border: none !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* --- TOOLBAR (En-tête) --- */
+.rbc-toolbar {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rbc-toolbar-label {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+/* Boutons de navigation (Today, <, >) */
+.rbc-btn-group button {
+  border: none !important;
+  background: #f3f4f6 !important;
+  border-radius: 12px !important;
+  margin: 0 4px;
+  font-weight: 600;
+  padding: 8px 16px;
+}
+
+/* Boutons de vue (Month, Week, Day) - Style Pill */
+.rbc-toolbar .rbc-btn-group:last-child {
+  background: #f3f4f6;
+  border-radius: 15px;
+  padding: 4px;
+}
+
+.rbc-toolbar .rbc-btn-group:last-child button.rbc-active {
+  background: white !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  color: black;
+}
+
+/* --- LA GRILLE --- */
+.rbc-time-view {
+  border: none !important;
+}
+
+.rbc-header {
+  border-bottom: none !important;
+  padding: 15px 0 !important;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+/* La ligne des heures (Time Gutter) */
+.rbc-time-gutter .rbc-timeslot-group {
+  border: none !important;
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+/* Supprimer les bordures internes pour un look épuré */
+.rbc-timeslot-group {
+  border-bottom: 1px solid #f9fafb !important;
+}
+
+/* --- LES ÉVÉNEMENTS (Glassmorphism) --- */
+.rbc-event {
+  border: none !important;
+  border-radius: 16px !important; /* Très arrondi comme sur l'image */
+  padding: 10px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.rbc-event-label {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.rbc-event-content {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
