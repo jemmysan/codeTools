@@ -23,7 +23,6 @@ export default function CalendarComponent() {
   const [selectedDate, setSelectedDate] = useState(null);
 
 
-
   const eventStyleGetter = (event) => ({
     style: {
       backgroundColor: `${event.color}20`,
