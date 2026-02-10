@@ -1,0 +1,35 @@
+.owl-container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.owl-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  width: 250px;
+  text-align: center;
+  transition: transform 0.3s ease; /* Transition douce */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Effet au survol (Bonus) */
+.owl-card:hover {
+  transform: scale(1.05);
+  border-color: #646cff;
+}
+
+.owl-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.owl-description {
+  margin-top: 10px;
+  font-style: italic;
+  color: #555;
+}

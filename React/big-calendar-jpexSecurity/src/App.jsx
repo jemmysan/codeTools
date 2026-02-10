@@ -11,8 +11,8 @@ function App() {
       <div style={{ flex: 1 }}>
         {/* <CalendarComponent /> */}
         {/* <ServicePlanning/> */}
-        <Navbar/>
-      <SitesManagement/>
+        {/* <Navbar/> */}
+      {/* <SitesManagement/> */}
       </div>
     
   );
