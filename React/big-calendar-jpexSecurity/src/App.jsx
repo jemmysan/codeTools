@@ -10,7 +10,7 @@ function App() {
      
       <div style={{ flex: 1 }}>
         {/* <CalendarComponent /> */}
-        {/* <ServicePlanning/> */}
+        <ServicePlanning/>
         {/* <Navbar/> */}
       {/* <SitesManagement/> */}
       </div>
