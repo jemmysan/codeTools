@@ -1,0 +1,35 @@
+# Environments & Secrets
+.env
+.env.*
+!.env.example
+
+# Virtual Environments
+.venv/
+venv/
+env/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Build & Distribution
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs & Temporary Files
+*.log
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
