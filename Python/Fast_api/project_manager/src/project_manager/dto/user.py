@@ -1,6 +1,6 @@
 from datetime import datetime
 from project_manager.schemas.users import UserBase
-from pydantic import BaseModel, Field, AliasChoices
+from pydantic import Field, AliasChoices
 
 
 
