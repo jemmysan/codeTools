@@ -1,13 +1,14 @@
 from datetime import datetime
-from pydantic import AliasChoices, Field
+from pydantic import Field
 from project_manager.schemas.roles import RoleBase
 
 
 class RoleResponse(RoleBase):
-    id: str = Field(..., validation_alias=AliasChoices("_id", "id"))
+    id: str = Field(..., alias="_id")
     created_at : datetime
 
     model_config = {
+        # "populate_by_name": True,
         "from_attributes": True,
     }
 

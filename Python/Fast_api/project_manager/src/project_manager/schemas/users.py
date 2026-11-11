@@ -1,14 +1,12 @@
-from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, EmailStr, Field
-from project_manager.models.role import Role
 
 
 # Schéma de base réutilisable
 class UserBase(BaseModel):
     email: EmailStr
     full_name: str = Field(..., min_length=2, max_length=100)
-    role: Role = Role.DEVELOPER
+    role_id : str = Field(..., description="ID MongoDB du rôle attribué (ex: 6af30df8ecd3fea22c64ad0e)")
 
 
 # Données requises à la création d'un utilisateur
@@ -20,7 +18,7 @@ class UserCreate(UserBase):
 class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None
     full_name: Optional[str] = Field(None, min_length=2, max_length=100)
-    role: Optional[Role] = None
+    role_id : Optional[str] = None
     is_active: Optional[bool] = None
 
 

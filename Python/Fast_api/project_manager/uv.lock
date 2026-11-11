@@ -952,6 +952,7 @@ name = "project-manager"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "bcrypt" },
     { name = "email-validator" },
     { name = "fastapi", extra = ["standard"] },
     { name = "motor" },
@@ -963,6 +964,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "bcrypt", specifier = ">=5.0.0" },
     { name = "email-validator", specifier = ">=2.3.0" },
     { name = "fastapi", extras = ["standard"], specifier = ">=0.162.2" },
     { name = "motor", specifier = ">=3.7.1" },
