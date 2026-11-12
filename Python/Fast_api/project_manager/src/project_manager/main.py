@@ -8,8 +8,10 @@ from project_manager.db.mongodb import (
     close_mongo_connection,
     get_database,
 )
+
 from project_manager.routers.users import router as user_router
 from project_manager.routers.roles import router as role_router
+from project_manager.routers.auth import router as auth_router
 
 PREFIX = "/api/v1"
 
@@ -26,6 +28,8 @@ app = FastAPI(
 
 app.include_router(user_router, prefix=PREFIX)
 app.include_router(role_router, prefix=PREFIX)
+app.include_router(auth_router, prefix=PREFIX)
+
 
 @app.get("/health/db")
 async def check_db_connection(database: AsyncIOMotorDatabase = Depends(get_database)):

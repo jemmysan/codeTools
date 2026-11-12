@@ -5,7 +5,11 @@ class Settings(BaseSettings):
     MONGO_URI: str
     MONGO_DB_NAME: str = "taskflow_db"
 
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    # Configuration JWT
+    SECRET_KEY: str
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 settings = Settings()

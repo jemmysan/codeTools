@@ -40,3 +40,6 @@
 - 3 - Dto
 - 4 - Ajouter le Hachage des Mots de Passe
 - 5 - Implémenter le Router Utilisateurs
+
+# - Authentification functionality
+- install  : uv add pyjwt python-multipart
